@@ -8,25 +8,223 @@
 </head>
 <link rel="stylesheet" href="style.css">
 <script src="script.js" defer></script>
+
 <body>
+
 <main class="app">
-  <header class="topbar"><div class="brand"><div class="mark">FS</div><div><h1 id="appTitle">Funnel Stats</h1><p id="brandSubtitle">Monthly lead, free trial & paid conversion</p></div></div><div class="toolbar"><div class="select-wrap"><select id="monthSelect" aria-label="Select month"></select></div><button class="btn" id="connectBtn">Connect sheet</button><button class="btn primary" id="refreshBtn">↻ Refresh</button></div></header>
-  <nav class="tabs" aria-label="Views"><button class="tab active" data-view="dashboard">Dashboard</button><button class="tab" data-view="raw">Raw data</button></nav>
+
+  <header class="topbar">
+    <div class="brand"><div class="mark">FS</div>
+    <div>
+      <h1 id="appTitle">Funnel Stats</h1>
+      <p id="brandSubtitle">Monthly lead, free trial and paid conversion performance</p>
+    </div>
+  </div>
+  
+  <div class="toolbar">
+    <div class="select-wrap">
+      <select id="monthSelect" aria-label="Select month"></select>
+    </div>
+    
+    <button class="btn" id="connectBtn">Connect sheet</button>
+    <button class="btn primary" id="refreshBtn">↻ Refresh</button>
+  </div>
+
+</header>
+  <nav class="tabs" aria-label="Views">
+    <button class="tab active" data-view="dashboard">Dashboard</button>
+    <button class="tab" data-view="raw">Raw data</button>
+  </nav>
+
   <section id="dashboard" class="dashboard">
     <div class="grid kpis" id="kpis"></div>
-    <div class="section-head"><div><h2 id="funnelOverviewTitle">Funnel overview</h2><p id="funnelOverviewText">See where this month's leads are converting or dropping off.</p></div><span class="subtle" id="updatedLabel">Graph data · updated just now</span></div>
-    <div class="funnel-layout"><div class="card funnel-card"><div class="eyebrow"><span>Selected month</span><span id="funnelMonth"></span></div><div class="funnel-visual" id="funnel"></div></div><div class="card funnel-summary"><div class="eyebrow"><span>Overall conversion</span><span class="icon">↗</span></div><div class="big-rate" id="overallRate">N/A</div><div class="subtle">Lead → paid conversion</div><div id="funnelRates"></div></div></div>
-    <div class="section-head"><div><h2 id="timePerformanceTitle">Performance over time</h2><p id="timePerformanceText">Volume & conversion quality across every month.</p></div></div>
-    <div class="grid chart-grid"><div class="card chart-card"><div class="eyebrow"><span id="funnelVolumeLabel">Funnel volume</span><span class="subtle" id="monthlyLabel">Monthly</span></div><div class="chart-wrap" id="volumeChart"></div><div class="legend"><span><i style="background:#386bed"></i><span id="leadsLegend">Leads</span></span><span><i style="background:#79a1f4"></i><span id="freeTrialsLegend">Free trials</span></span><span><i style="background:#23a477"></i><span id="paidLegend">Paid</span></span></div></div><div class="card chart-card"><div class="eyebrow"><span id="conversionRatesLabel">Conversion rates</span><span class="subtle" id="monthlyPercentLabel">Monthly %</span></div><div class="chart-wrap" id="rateChart"></div><div class="legend"><span><i style="background:#386bed"></i><span id="leadFtLegend">Lead → FT</span></span><span><i style="background:#23a477"></i><span id="ftPaidLegend">FT → Paid</span></span><span><i style="background:#d7962d"></i><span id="leadPaidLegend">Lead → Paid</span></span></div></div></div>
-    <div class="section-head"><div><h2 id="channelPerformanceTitle">Acquisition channel performance</h2><p id="channelPerformanceText">Which sources create trials & customers, not just activity.</p></div></div><div class="grid channels" id="channels"></div>
-    <div class="section-head"><div><h2 id="qualityOutcomeTitle">Lead quality & outcomes</h2><p id="qualityOutcomeText">Mix & final destination of your leads.</p></div></div><div class="grid two-col"><div class="card quality-card"><div class="eyebrow"><span id="leadQualityLabel">Lead quality</span><span class="subtle" id="qualityShareLabel">Share of total leads</span></div><div class="donut-row"><div class="donut" id="qualityDonut"></div><div class="quality-list" id="qualityList"></div></div></div><div class="card outcome-card"><div class="eyebrow"><span id="leadOutcomeLabel">Lead outcome</span><span class="subtle" id="leadOutcomeTextLabel">What happened to leads</span></div><div class="donut-row"><div class="donut" id="outcomeDonut"></div><div class="quality-list" id="outcomeList"></div></div></div></div>
-    <div class="section-head"><div><h2 id="callPerformanceTitle">Call performance</h2><p id="callPerformanceText">Track the progression from scheduled conversations to revenue.</p></div></div><div class="card progress-card" id="callPanel"></div>
-    <div class="section-head"><div><h2 id="emailPerformanceTitle">Emailer performance</h2><p id="emailPerformanceText">Reply quality & downstream conversion.</p></div></div><div class="card progress-card" id="emailPanel"></div>
-    <div class="section-head"><div><h2 id="adsPerformanceTitle">Google Ads performance</h2><p id="adsPerformanceText">Paid acquisition funnel.</p></div></div><div class="card progress-card" id="adsPanel"></div>
-    <div class="section-head"><div><h2 id="keyInsightsTitle">Key insights</h2><p id="keyInsightsText">Factual observations from the selected period.</p></div></div><div class="insights" id="insights"></div>
+    <div class="section-head"><div><h2 id="funnelOverviewTitle">Funnel overview</h2>
+      <p id="funnelOverviewText">See exactly where this month's leads are converting or dropping off.</p>
+    </div><span class="subtle" id="updatedLabel">Demo data · updated just now</span>
+  </div>
+
+    <div class="funnel-layout">
+      <div class="card funnel-card">
+        <div class="eyebrow"><span>Selected month</span>
+          <span id="funnelMonth"></span>
+        </div>
+        
+        <div class="funnel-visual" id="funnel"></div>
+      </div>
+
+      <div class="card funnel-summary">
+        <div class="eyebrow">
+          <span>Overall conversion</span>
+          <span class="icon">↗</span>
+        </div>
+
+        <div class="big-rate" id="overallRate">N/A</div>
+        <div class="subtle">Lead → paid conversion</div>
+        <div id="funnelRates"></div>
+      </div>
+    </div>
+
+    <div class="section-head"><div>
+      <h2 id="timePerformanceTitle">Performance over time</h2>
+      <p id="timePerformanceText">Volume and conversion quality across every available month.</p>
+    </div>
+  </div>
+
+    <div class="grid chart-grid">
+      <div class="card chart-card">
+        <div class="eyebrow">
+          <span id="funnelVolumeLabel">Funnel volume</span>
+          <span class="subtle" id="monthlyLabel">Monthly</span>
+        </div>
+
+        <div class="chart-wrap" id="volumeChart"></div>
+        <div class="legend">
+          <span><i style="background:#386bed">
+
+          </i>
+          <span id="leadsLegend">Leads</span>
+        </span>
+        <span><i style="background:#79a1f4">
+
+        </i>
+        <span id="freeTrialsLegend">Free trials</span>
+      </span>
+      <span>
+        <i style="background:#23a477">
+
+        </i>
+        <span id="paidLegend">Paid</span>
+      </span>
+    </div>
+  </div>
+  
+  <div class="card chart-card">
+    <div class="eyebrow">
+      <span id="conversionRatesLabel">Conversion rates</span>
+      <span class="subtle" id="monthlyPercentLabel">Monthly %</span>
+    </div><div class="chart-wrap" id="rateChart"></div>
+    <div class="legend"><span><i style="background:#386bed">
+
+    </i><span id="leadFtLegend">Lead → FT</span>
+  </span>
+  <span>
+    <i style="background:#23a477">
+
+    </i><span id="ftPaidLegend">FT → Paid</span>
+  </span>
+  <span>
+    <i style="background:#d7962d">
+
+    </i><span id="leadPaidLegend">Lead → Paid</span>
+  </span></div>
+</div>
+</div>
+    <div class="section-head"><div>
+      <h2 id="channelPerformanceTitle">Acquisition channel performance</h2>
+      <p id="channelPerformanceText">Which sources create trials and customers, not just activity.</p>
+    </div>
+  </div>
+
+  <div class="grid channels" id="channels"></div>
+    <div class="section-head"><div>
+      <h2 id="qualityOutcomeTitle">Lead quality & outcomes</h2>
+      <p id="qualityOutcomeText">A quick read on the mix and final destination of your leads.</p>
+    </div>
+  </div>
+  
+  <div class="grid two-col">
+    <div class="card quality-card"><div class="eyebrow">
+      <span id="leadQualityLabel">Lead quality</span>
+      <span class="subtle" id="qualityShareLabel">Share of total leads</span>
+    </div>
+    <div class="donut-row">
+      <div class="donut" id="qualityDonut">
+
+      </div>
+      <div class="quality-list" id="qualityList">
+
+      </div>
+    </div>
+  </div>
+  <div class="card outcome-card">
+    <div class="eyebrow">
+      <span id="leadOutcomeLabel">Lead outcome</span>
+      <span class="subtle" id="leadOutcomeTextLabel">What happened to leads</span>
+    </div>
+    <div class="donut-row">
+      <div class="donut" id="outcomeDonut"></div>
+      <div class="quality-list" id="outcomeList"></div>
+    </div>
+  </div>
+</div>
+
+    <div class="section-head"><div>
+      <h2 id="callPerformanceTitle">Call performance</h2>
+      <p id="callPerformanceText">Track the progression from scheduled conversations to revenue.</p>
+    </div>
+  </div>
+
+    <div class="card progress-card" id="callPanel"></div>
+    <div class="section-head"><div>
+      <h2 id="emailPerformanceTitle">Emailer performance</h2>
+      <p id="emailPerformanceText">Understand reply quality and downstream conversion.</p>
+    </div>
+  </div>
+
+  <div class="card progress-card" id="emailPanel"></div>
+    <div class="section-head"><div>
+      <h2 id="adsPerformanceTitle">Google Ads performance</h2>
+      <p id="adsPerformanceText">Paid acquisition funnel at a glance.</p>
+    </div>
+  </div>
+  
+  <div class="card progress-card" id="adsPanel"></div>
+    <div class="section-head"><div>
+      <h2 id="keyInsightsTitle">Key insights</h2>
+      <p id="keyInsightsText">Factual observations from the selected period.</p>
+    </div>
+  </div>
+  
+  <div class="insights" id="insights"></div>
   </section>
-  <section id="raw" class="raw"><div class="section-head" style="margin-top:0"><div><h2 id="rawDataTitle">Raw monthly data</h2><p id="rawDataText">Underlying values imported from the Monthly Data tab.</p></div></div><div class="raw-tools"><input id="rawSearch" placeholder="Search months..." aria-label="Search raw data"></div><div class="table-wrap"><table><thead id="rawHead"></thead><tbody id="rawBody"></tbody></table></div></section>
+
+  <section id="raw" class="raw">
+    <div class="section-head" style="margin-top:0"><div>
+      <h2 id="rawDataTitle">Raw monthly data</h2>
+      <p id="rawDataText">Underlying values imported from the Monthly Data tab.</p>
+    </div>
+  </div>
+
+  <div class="raw-tools">
+    <input id="rawSearch" placeholder="Search months..." aria-label="Search raw data">
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead id="rawHead"></thead>
+      <tbody id="rawBody"></tbody>
+    </table>
+
+  </div>
+</section>
 </main>
-<div class="modal" id="connectModal"><div class="modal-box"><h2 id="connectModalTitle">Connect your Google Sheet</h2><p id="connectModalText">Paste a published or accessible Google Sheet URL. Funnel Stats will read the <b>Monthly Data</b> tab and calculate all metrics in your browser.</p><input id="sheetUrl" placeholder="https://docs.google.com/spreadsheets/d/..." type="url"><div class="modal-actions"><button class="btn" id="cancelConnect">Cancel</button><button class="btn primary" id="doConnect">Connect</button></div><div class="status" id="connectStatus"></div></div></div>
+<div class="modal" id="connectModal">
+  <div class="modal-box">
+
+    <h2 id="connectModalTitle">Connect your Google Sheet</h2>
+
+    <p id="connectModalText">Paste a published or accessible Google Sheet URL. Funnel Stats will read the 
+      <b>Monthly Data     
+      </b> tab and calculate all metrics in your browser.</p>
+
+    <input id="sheetUrl" placeholder="https://docs.google.com/spreadsheets/d/..." type="url">
+    <div class="modal-actions">
+      <button class="btn" id="cancelConnect">Cancel</button>
+      <button class="btn primary" id="doConnect">Connect</button>
+    </div>
+    <div class="status" id="connectStatus"></div>
+  </div>
+  
+</div>
 </body>
 </html>
