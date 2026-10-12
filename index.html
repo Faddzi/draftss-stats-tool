@@ -6,46 +6,99 @@
 <title>Funnel Stats</title>
 
 </head>
-<link rel="stylesheet" href="style.css">
-<script src="script.js" defer></script>
+<link rel="stylesheet" href="style.css?v=pipeline-snapshot-2">
+<script src="script.js?v=pipeline-snapshot-3" defer></script>
 
 <body>
 
 <main class="app">
 
   <header class="topbar">
-    <div class="brand"><div class="mark">FS</div>
-    <div>
-      <h1 id="appTitle">Funnel Stats</h1>
-      <p id="brandSubtitle">Monthly lead, free trial and paid conversion performance</p>
+    <a class="brand" href="#" aria-label="Funnel Stats home">
+      <div class="mark">F<span>.</span></div>
+      <div>
+        <h1 id="appTitle">Funnel Stats</h1>
+        <p id="brandSubtitle">Leads, trial cohorts and lead source performance</p>
+      </div>
+    </a>
+    <div class="toolbar">
+      <div class="date-range-wrap">
+        <button class="date-range-trigger" id="dateRangeToggle" type="button" aria-haspopup="dialog" aria-expanded="false">
+          <span class="date-range-icon" aria-hidden="true">▦</span>
+          <span id="dateRangeText">All time</span>
+          <span class="date-range-chevron" aria-hidden="true">⌄</span>
+        </button>
+        <div class="date-picker-panel" id="datePickerPanel" role="dialog" aria-label="Choose a date range" hidden></div>
+      </div>
+      <button class="btn" id="connectBtn"><span class="button-icon">↗</span> Connect sheet</button>
+      <button class="btn primary" id="refreshBtn"><span class="refresh-icon">↻</span> Refresh</button>
     </div>
-  </div>
-  
-  <div class="toolbar">
-    <div class="select-wrap">
-      <select id="monthSelect" aria-label="Select month"></select>
-    </div>
-    
-    <button class="btn" id="connectBtn">Connect sheet</button>
-    <button class="btn primary" id="refreshBtn">↻ Refresh</button>
-  </div>
-
-</header>
+  </header>
   <nav class="tabs" aria-label="Views">
-    <button class="tab active" data-view="dashboard">Dashboard</button>
-    <button class="tab" data-view="raw">Raw data</button>
+    <button class="tab active" data-view="dashboard"><span>01</span> Overview</button>
+    <button class="tab" data-view="raw"><span>02</span> Monthly data</button>
   </nav>
 
   <section id="dashboard" class="dashboard">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-copy">
+        <div class="hero-kicker"><i></i> YOUR GROWTH, IN FOCUS</div>
+        <h2 id="heroTitle">Good leads.<br><span>Real momentum.</span></h2>
+        <p>One clear view of where your leads come from, when they start a trial, and which trial cohorts become customers.</p>
+        <a class="hero-link" href="#sourceSection">Explore lead sources <span>↓</span></a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="orbit orbit-three"></div>
+        <div class="hero-core"><span>FT</span><b>→</b><strong>Paid</strong></div>
+        <div class="float-chip chip-leads"><i></i> LEADS <b>01</b></div>
+        <div class="float-chip chip-trial"><i></i> TRIAL <b>02</b></div>
+        <div class="float-chip chip-paid"><i></i> PAID <b>03</b></div>
+      </div>
+      <div class="hero-meta">
+        <span>DATE RANGE SNAPSHOT</span>
+        <b id="heroMonth">All available months</b>
+        <span class="data-status"><i></i><span id="updatedLabel">Loading sheet…</span></span>
+      </div>
+    </section>
     <div class="grid kpis" id="kpis"></div>
-    <div class="section-head"><div><h2 id="funnelOverviewTitle">Funnel overview</h2>
-      <p id="funnelOverviewText">See exactly where this month's leads are converting or dropping off.</p>
-    </div><span class="subtle" id="updatedLabel">Demo data · updated just now</span>
+    <div class="section-head"><div><span class="section-index">01 — PIPELINE SNAPSHOT</span>
+      <h2>Value, trials & calls</h2>
+      <p id="snapshotRangeText">Lead value, trial outcomes, reasons and calls within the selected date range.</p>
+    </div></div>
+    <div class="snapshot-grid">
+      <article class="card snapshot-card">
+        <div class="eyebrow"><span>Lead value by quality</span><span class="subtle">Plan value</span></div>
+        <div class="snapshot-total"><strong id="leadValueTotal">$0</strong><span id="leadValueCount">0 leads</span></div>
+        <div class="snapshot-list" id="leadValueBreakdown"></div>
+      </article>
+      <article class="card snapshot-card">
+        <div class="eyebrow"><span>Free trial outcomes</span><span class="subtle">Trial-start date</span></div>
+        <div class="snapshot-total"><strong id="trialCountTotal">0</strong><span>trials started in range</span></div>
+        <div class="snapshot-list" id="trialOutcomeBreakdown"></div>
+        <p class="snapshot-note">The sheet has no separate cancelled, ongoing or awaiting-payment trial status.</p>
+      </article>
+      <article class="card snapshot-card">
+        <div class="eyebrow"><span>Call activity</span><span class="subtle">Scheduled date</span></div>
+        <div class="snapshot-total"><strong id="callCountTotal">0</strong><span>calls in range</span></div>
+        <div class="snapshot-list" id="callBreakdown"></div>
+      </article>
+      <article class="card snapshot-card">
+        <div class="eyebrow"><span>No-signup reasons</span><span class="subtle">Plan value</span></div>
+        <div class="snapshot-total"><strong id="noSignupCountTotal">0</strong><span>reasons recorded</span></div>
+        <div class="snapshot-list" id="noSignupBreakdown"></div>
+        <p class="snapshot-note">Uses “Reasons-No Sign Ups”; the sheet does not identify trial-cancellation reasons separately.</p>
+      </article>
+    </div>
+    <div class="section-head"><div><span class="section-index">02 — THE JOURNEY</span><h2 id="funnelOverviewTitle">Funnel overview</h2>
+      <p id="funnelOverviewText">Choose a date range to see lead and trial activity.</p>
+    </div>
   </div>
 
     <div class="funnel-layout">
       <div class="card funnel-card">
-        <div class="eyebrow"><span>Selected month</span>
+        <div class="eyebrow"><span>Selected date range</span>
           <span id="funnelMonth"></span>
         </div>
         
@@ -54,17 +107,17 @@
 
       <div class="card funnel-summary">
         <div class="eyebrow">
-          <span>Overall conversion</span>
+          <span>Trial cohort conversion</span>
           <span class="icon">↗</span>
         </div>
 
         <div class="big-rate" id="overallRate">N/A</div>
-        <div class="subtle">Lead → paid conversion</div>
+        <div class="subtle" id="overallRateCaption">Lead → paid conversion</div>
         <div id="funnelRates"></div>
       </div>
     </div>
 
-    <div class="section-head"><div>
+    <div class="section-head"><div><span class="section-index">03 — MOMENTUM</span>
       <h2 id="timePerformanceTitle">Performance over time</h2>
       <p id="timePerformanceText">Volume and conversion quality across every available month.</p>
     </div>
@@ -119,14 +172,25 @@
   </span></div>
 </div>
 </div>
-    <div class="section-head"><div>
-      <h2 id="channelPerformanceTitle">Acquisition channel performance</h2>
-      <p id="channelPerformanceText">Which sources create trials and customers, not just activity.</p>
+    <div class="section-head" id="sourceSection"><div><span class="section-index">04 — WHAT'S WORKING</span>
+      <h2 id="channelPerformanceTitle">Lead source performance</h2>
+      <p id="channelPerformanceText">Leads are counted by generated date. Trial starts and paid conversions are grouped by trial-start month.</p>
     </div>
   </div>
 
-  <div class="grid channels" id="channels"></div>
-    <div class="section-head"><div>
+  <div class="card source-card">
+    <div class="source-toolbar">
+      <div><strong>Every channel, side by side.</strong><span>Choose a column heading to rank your sources.</span></div>
+      <label class="source-search"><span>⌕</span><input id="sourceSearch" type="search" placeholder="Find a source..." aria-label="Search lead sources"></label>
+    </div>
+    <div class="table-wrap">
+      <table class="source-table">
+        <thead id="sourceHead"></thead>
+        <tbody id="sourceBody"></tbody>
+      </table>
+    </div>
+  </div>
+    <div class="section-head"><div><span class="section-index">05 — LEAD QUALITY</span>
       <h2 id="qualityOutcomeTitle">Lead quality & outcomes</h2>
       <p id="qualityOutcomeText">A quick read on the mix and final destination of your leads.</p>
     </div>
@@ -158,28 +222,14 @@
   </div>
 </div>
 
-    <div class="section-head"><div>
+    <div class="section-head"><div><span class="section-index">06 — CONVERSATIONS</span>
       <h2 id="callPerformanceTitle">Call performance</h2>
-      <p id="callPerformanceText">Track the progression from scheduled conversations to revenue.</p>
+      <p id="callPerformanceText">Calls use their scheduled month; trials and paid conversions use the trial-start month.</p>
     </div>
   </div>
 
     <div class="card progress-card" id="callPanel"></div>
-    <div class="section-head"><div>
-      <h2 id="emailPerformanceTitle">Emailer performance</h2>
-      <p id="emailPerformanceText">Understand reply quality and downstream conversion.</p>
-    </div>
-  </div>
-
-  <div class="card progress-card" id="emailPanel"></div>
-    <div class="section-head"><div>
-      <h2 id="adsPerformanceTitle">Google Ads performance</h2>
-      <p id="adsPerformanceText">Paid acquisition funnel at a glance.</p>
-    </div>
-  </div>
-  
-  <div class="card progress-card" id="adsPanel"></div>
-    <div class="section-head"><div>
+    <div class="section-head"><div><span class="section-index">07 — THE TAKEAWAY</span>
       <h2 id="keyInsightsTitle">Key insights</h2>
       <p id="keyInsightsText">Factual observations from the selected period.</p>
     </div>
@@ -191,7 +241,7 @@
   <section id="raw" class="raw">
     <div class="section-head" style="margin-top:0"><div>
       <h2 id="rawDataTitle">Raw monthly data</h2>
-      <p id="rawDataText">Underlying values imported from the Monthly Data tab.</p>
+      <p id="rawDataText">Monthly summaries derived from the connected lead records. Contact details are not shown.</p>
     </div>
   </div>
 
@@ -213,9 +263,7 @@
 
     <h2 id="connectModalTitle">Connect your Google Sheet</h2>
 
-    <p id="connectModalText">Paste a published or accessible Google Sheet URL. Funnel Stats will read the 
-      <b>Monthly Data     
-      </b> tab and calculate all metrics in your browser.</p>
+    <p id="connectModalText">Paste a Google Sheet URL. The sheet must be viewable by anyone with the link. The dashboard reads the first tab and calculates summaries in your browser.</p>
 
     <input id="sheetUrl" placeholder="https://docs.google.com/spreadsheets/d/..." type="url">
     <div class="modal-actions">
